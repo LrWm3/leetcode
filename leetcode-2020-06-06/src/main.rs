@@ -83,31 +83,26 @@ impl Solution {
         //     }
         // }
         // Start with the tallest and work our way backwards
-        for target_height in peoples_height_inserted_len..0 {
-          let person_stack = people_stacks[target_height];
-          if person_stack.unwrap().last().map_or(false, |person_small| {
+        for target_height in (0..peoples_height_inserted_len).rev() {
+          println!("For person {}, trying height {}", person_idx, target_height);
+          let person_stack = &mut people_stacks[target_height];
+          if person_stack.as_ref().and_then(|ps| ps.last()).map_or(false, |person_small| {
             let person_height = person_small[height_idx];
             if person_height < peoples_height_inserted_desc[target_height] {
-                person_stack.unwrap().pop();
+                
                 peoples_height_inserted_desc.insert(target_height + 1, person_height);
-                people_reconstruct.push(person_small);
+                people_reconstruct.push(person_small.to_vec());
+                return true;
             }
+            return false;
           }) {
+            let person = person_stack.as_mut().unwrap().pop();
+            println!("found a person {:?}", person);
             break;
           }
         }
       }
-      // Given the number of heights so far, iterate 
-      // For person in 0..people_len
-      //   For target_taller in peoples_height_inserted_desc..0;
-      //     peek from people_stacks; if none continue, if value
-      //       if minimum_height lt 'peoples_height_inserted_desc[target_taller]'
-      //         remove / pop person from people_stack[target_taller] <- done
-      //         insert person.height in front of 'peoples_height_inserted_desc[target_taller]' <- done
-      //            e.g. if 'target_taller' is '0', insert at idx '1' 
-      //         push person onto 'person_reconstruct' 
-      //      if no people met condition, the list is invalid, which sucks
-      return people_copy;
+      return people_reconstruct;
     }
 }
 
