@@ -1,9 +1,15 @@
 #[cfg(test)]
 mod tests {
+    // Note this useful idiom: importing names from outer (for mod tests) scope.
+    use super::*;
+
 
     #[test]
     fn test_reconstruct_queue() {
-        assert_eq!(1 + 2, 3);
+        let people = vec![vec![7,0], vec![4,4], vec![7,1], vec![5,0], vec![6,1], vec![5,2]];
+        let people_expected = vec![vec![5,0], vec![7,0], vec![5,2], vec![6,1], vec![4,4], vec![7,1]];
+        let people_actual = Solution::reconstruct_queue(people);
+        assert_eq!(people_actual, people_expected);
     }
 }
 
