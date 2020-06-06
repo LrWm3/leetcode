@@ -95,7 +95,7 @@ impl Solution {
 
     // Sort people provided into a stack where grouped by num-taller and heights are sub-sorted descending
     people_copy
-      .sort_unstable_by(|a, b| (a[taller_idx], a[height_idx]).cmp(&(b[taller_idx], b[height_idx])));
+      .sort_unstable_by(|a, b| (a[taller_idx], a[height_idx]).cmp(&(b[taller_idx], -b[height_idx])));
 
     // Push people onto the appropriate people stacks
     while let Some(person) = people_copy.pop() {
