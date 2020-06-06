@@ -29,7 +29,7 @@ impl Solution {
       // Contains heights we've inserted already, sorted asc
       let people_len = people_copy.len();
       let mut peoples_height_inserted_desc: Vec<i32> = vec![std::i32::MAX];
-      peoples_height_inserted_desc.reserve(people_copy.len() + 1);
+      peoples_height_inserted_desc.reserve(people_len + 1);
 
       let mut people_reconstruct: Vec<Vec<i32>> = vec![vec![]; people_len];
 
@@ -43,7 +43,7 @@ impl Solution {
       let mut people_stacks: Vec<Option<Vec<Vec<i32>>>> = vec![None; people_stack_size];
 
       // Sort people provided into a stack where grouped by num-taller and heights are sub-sorted descending
-      people_copy.sort_unstable_by(|a, b| (a[taller_idx], b[height_idx]).cmp(&(b[taller_idx], a[height_idx])));
+      people_copy.sort_unstable_by(|a, b| (a[taller_idx], a[height_idx]).cmp(&(b[taller_idx], b[height_idx])));
 
       // Push people onto the appropriate people stacks
       while let Some(person) = people_copy.pop() {
@@ -63,25 +63,8 @@ impl Solution {
 
       for person_idx in 0..people_len {
         println!("finding person 1... {}", person_idx);
-        let peoples_height_inserted_len = peoples_height_inserted_desc.len();
-
-        // // Start with the tallest and work our way backwards
-        // for target_height in peoples_height_inserted_len..0 {
-        //   if people_stacks[target_height]
-        //     .map(|person_stack| (person_stack, person_stack.iter().rev().next()))
-        //     .filter(|person_stack_combo| person_stack_combo.1.unwrap()[height_idx] < peoples_height_inserted_desc[target_height])
-        //     .as_ref()
-        //     .map(|person_stack_combo| {
-        //       let person_stack = person_stack_combo.0;
-        //       let person = person_stack.pop().unwrap();
-        //       let person_height = person[height_idx];
-        //       peoples_height_inserted_desc.insert(target_height + 1, person_height);
-        //       people_reconstruct.push(person);
-        //       true
-        //     }).unwrap_or(false) {
-        //       break;
-        //     }
-        // }
+        let peoples_height_inserted_len = peoples_height_inserted_desc.len() - 1;
+        
         // Start with the tallest and work our way backwards
         for target_height in (0..peoples_height_inserted_len).rev() {
           println!("For person {}, trying height {}", person_idx, target_height);
