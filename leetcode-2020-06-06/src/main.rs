@@ -44,9 +44,7 @@ impl Solution {
       let taller_idx: usize = 1;
 
       let mut people_copy = people.clone();
-      
-      // let mut people = vec![vec![7,0], vec![4,4], vec![7,1], vec![5,0], vec![6,1], vec![5,2]];
-  
+
       // Contains heights we've inserted already, sorted asc
       let people_len = people_copy.len();
       let mut peoples_height_inserted_desc: Vec<i32> = vec![std::i32::MAX];
