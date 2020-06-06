@@ -13,6 +13,22 @@ mod tests {
         let people_actual = Solution::reconstruct_queue(people);
         assert_eq!(people_actual, people_expected);
     }
+
+    #[test]
+    fn test_reconstruct_empty_queue() {
+        let people: Vec<Vec<i32>> = vec![];
+        let people_expected: Vec<Vec<i32>> = vec![];
+        let people_actual = Solution::reconstruct_queue(people);
+        assert_eq!(people_actual, people_expected);
+    }
+
+    #[test]
+    fn test_reconstruct_one_in_queue() {
+        let people = vec![vec![7,0]];
+        let people_expected = vec![vec![7,0]];
+        let people_actual = Solution::reconstruct_queue(people);
+        assert_eq!(people_actual, people_expected);
+    }
 }
 
 struct Solution { }
@@ -20,7 +36,7 @@ struct Solution { }
 #[allow(dead_code)]
 impl Solution {
     pub fn reconstruct_queue(people: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
-      if (people.len() == 0 || people.len() == 1) {
+      if people.len() == 0 || people.len() == 1 {
         return people;
       }
 
@@ -59,7 +75,7 @@ impl Solution {
         people_stack.push(person);
       }
 
-      for person_idx in 0..people_len {
+      for _person_idx in 0..people_len {
         let peoples_height_inserted_len = cmp::min(
           peoples_height_inserted_desc.len(), 
           people_stacks.len());
@@ -77,7 +93,7 @@ impl Solution {
             }
             return false;
           }) {
-            let person = person_stack.as_mut().unwrap().pop();
+            person_stack.as_mut().unwrap().pop();
             break;
           }
         }
