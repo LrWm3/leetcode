@@ -1,0 +1,6 @@
+[package]
+name = "leetcode-2020-06-06"
+version = "0.1.0"
+authors = ["William Marsman <william.marsman@gmail.com>"]
+
+[dependencies]
