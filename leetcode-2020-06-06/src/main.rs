@@ -20,6 +20,9 @@ struct Solution { }
 #[allow(dead_code)]
 impl Solution {
     pub fn reconstruct_queue(people: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+      if (people.len() == 0 || people.len() == 1) {
+        return people;
+      }
 
       let height_idx: usize = 0;
       let taller_idx: usize = 1;
@@ -56,22 +59,13 @@ impl Solution {
         people_stack.push(person);
       }
 
-      println!("people[] {:?}", people_copy);
-      println!("people_copy[] {:?}", people_copy);
-      println!("people_stacks[] {:?}", people_stacks);
-      println!("people_stack_size {}", people_stack_size);
-      println!("peoples_height_inserted_desc: {:?}", peoples_height_inserted_desc);
-      println!("people_reconstruct:: {:?}", people_reconstruct);
-
       for person_idx in 0..people_len {
-        println!("finding person 1... {}", person_idx);
         let peoples_height_inserted_len = cmp::min(
           peoples_height_inserted_desc.len(), 
           people_stacks.len());
 
         // Start with the tallest and work our way backwards
         for target_height in (0..peoples_height_inserted_len).rev() {
-          println!("For person {}, trying height {}", person_idx, target_height);
           let person_stack = &mut people_stacks[target_height];
           if person_stack.as_ref().and_then(|ps| ps.last()).map_or(false, |person_small| {
             let person_height = person_small[height_idx];
@@ -84,7 +78,6 @@ impl Solution {
             return false;
           }) {
             let person = person_stack.as_mut().unwrap().pop();
-            println!("found a person {:?}", person);
             break;
           }
         }
